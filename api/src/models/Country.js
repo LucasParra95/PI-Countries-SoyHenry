@@ -4,7 +4,6 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('country', {
-<<<<<<< HEAD
     id: {
       type: DataTypes.STRING(3),
       allowNull: false,
@@ -47,11 +46,5 @@ module.exports = (sequelize) => {
       allowNull: true
     },
 
-=======
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
->>>>>>> 28eee10edae3e070dabba76d4a5206704cfbb72c
   });
 };
