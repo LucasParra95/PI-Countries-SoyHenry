@@ -15,7 +15,11 @@ describe('Country routes', () => {
     console.error('Unable to connect to the database:', err);
   }));
   beforeEach(() => Country.sync({ force: true })
+<<<<<<< HEAD
     .then(() => Country.create(country)));
+=======
+    .then(() => Country.create(pokemon)));
+>>>>>>> 28eee10edae3e070dabba76d4a5206704cfbb72c
   describe('GET /countries', () => {
     it('should get 200', () =>
       agent.get('/countries').expect(200)

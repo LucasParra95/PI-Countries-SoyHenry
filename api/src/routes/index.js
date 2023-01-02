@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { Router, response } = require('express');
 
 // Importar todos los routers;
@@ -5,10 +6,19 @@ const { Router, response } = require('express');
 
 const router = Router();
 const { getDbInfo, postActivity } = require('../controllers/controllers.js')
+=======
+const { Router } = require('express');
+// Importar todos los routers;
+// Ejemplo: const authRouter = require('./auth.js');
+
+
+const router = Router();
+>>>>>>> 28eee10edae3e070dabba76d4a5206704cfbb72c
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+<<<<<<< HEAD
 router.get('/countries', async (req, res)=>{
     const name = req.query.name;
     let countriesTotal = await getDbInfo();
@@ -45,5 +55,7 @@ router.post('/activities', async(req, res) => {
         return res.status(400).json({ message: error.message })
     }
 })
+=======
+>>>>>>> 28eee10edae3e070dabba76d4a5206704cfbb72c
 
 module.exports = router;
