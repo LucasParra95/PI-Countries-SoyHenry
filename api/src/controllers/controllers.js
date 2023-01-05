@@ -9,7 +9,7 @@ const getApiInfo = async ()=>{
                 name : el.name.official,
                 flag : el.flags[0],
                 id : el.cca3,
-                continent : el.continents,
+                continent : el.continents[0],
                 capital : el.capital,
                 subregion : el.subregion,
                 area : el.area,

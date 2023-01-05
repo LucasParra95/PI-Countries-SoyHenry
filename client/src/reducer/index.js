@@ -1,7 +1,7 @@
 
 var initialState = {
     countries: [],
-    singleCountry: [],
+    filterCountry: [],
     activities: [],
     detail:[]
 }
@@ -12,8 +12,19 @@ function rootReducer(state= initialState, action) {
             return {
                 ...state,
                 countries: action.payload,
-                singleCountry: action.payload
+                filterCountry: action.payload
             }
+
+        case 'FILTER_BY_CONTINENT':
+            const filterContinent = state.filterCountry
+            const filter = action.payload === 'All'? filterContinent : filterContinent.filter(el=>el.continent === action.payload)
+
+
+            return {
+                ...state,
+                countries: filter
+            }
+              
 
         case 'ORDER_BY_POPULATION':
             let sorted = action.payload === 'asc2' ?

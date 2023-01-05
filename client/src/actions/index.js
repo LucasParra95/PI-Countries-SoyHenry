@@ -11,6 +11,15 @@ export function getCountries(){
     }
 }
 
+export function filterCountriesByContinent(payload){
+     
+    console.log(payload)
+    return {
+        type: 'FILTER_BY_CONTINENT',
+        payload
+    }
+}
+
 export function orderCountriesByPopulation(payload){
     return {
         type: 'ORDER_BY_POPULATION',

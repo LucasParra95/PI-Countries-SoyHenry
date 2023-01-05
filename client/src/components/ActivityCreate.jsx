@@ -9,11 +9,10 @@ export default function ActivityCreate(){
     const history = useHistory();
     const countries = useSelector((state)=>state.countries);
     const [errorName, setErrorName] = useState('This field cannot be empty');
-    // const [error, setError] = useState('This field cannot be empty');
-    const [error, setError] = useState({
-        errorDifficulty: 'This field cannot be empty',
-        errorSeason: 'This field cannot be empty',
-    })
+    const [errorDifficulty, setErrorDifficulty] = useState('This field cannot be empty');
+    const [errorSeason, setErrorSeason] = useState('This field cannot be empty')
+    const [errorDuration, setErrorDuration] = useState('This field cannot be empty')
+
 
     const [input, setInput] = useState({
         name:'',
@@ -37,11 +36,35 @@ export default function ActivityCreate(){
         })
     }
 
-    function handleChange(e){
+    function handleChangeDifficulty(e){
         if(e.target.value === "undefined"||e.target.value === ""){
-            setError('This field cannot be empty')
+            setErrorDifficulty('This field cannot be empty')
         }else{
-            setError('')
+            setErrorDifficulty('')
+        }
+        setInput({
+            ...input,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    function handleChangeDuration(e){
+        if(e.target.value === undefined ||e.target.value === ""){
+            setErrorDuration('This field cannot be empty')
+        }else{
+            setErrorDuration('')
+        }
+        setInput({
+            ...input,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    function handleChangeSeason(e){
+        if(e.target.value === "undefined"||e.target.value === ""){
+            setErrorSeason('This field cannot be empty')
+        }else{
+            setErrorSeason('')
         }
         setInput({
             ...input,
@@ -58,16 +81,21 @@ export default function ActivityCreate(){
 
     function handleSubmit(e){
         e.preventDefault();
-        dispatch(postActivity(input));
-        alert("Activity Created!");
-        setInput({
-            name:'',
-            difficulty:'',
-            duration:'',
-            season:'',
-            countryId:[]
-        })
-        history.push('/home')
+
+        if(errorName===''&&errorDifficulty===''&&errorDuration===''&&errorSeason===''){
+            dispatch(postActivity(input));
+            alert("Activity Created!");
+            setInput({
+                name:'',
+                difficulty:'',
+                duration:'',
+                season:'',
+                countryId:[]
+            })
+            history.push('/home')
+        }else {
+            alert("There is an empty field")
+        }
     }
 
     useEffect(()=>{
@@ -88,7 +116,7 @@ export default function ActivityCreate(){
                 </div>
                 <div>
                     <label>Difficulty:</label>
-                    <select key="difficulty" name="difficulty" onChange={e => handleChange(e)}>
+                    <select key="difficulty" name="difficulty" onChange={e => handleChangeDifficulty(e)}>
 
                         <option value="undefined">SELECT DIFFICULTY</option>
                         <option value="1">1</option>
@@ -98,16 +126,16 @@ export default function ActivityCreate(){
                         <option value="5">5</option>
 
                     </select>
-                    {!error.errorDifficulty ? null : <span>{error.errorDifficulty}</span>}
+                    {!errorDifficulty ? null : <span>{errorDifficulty}</span>}
                 </div>
                 <div>
                     <label>Duration:</label>
-                    <input key="duration" type="time" name="duration" value={input.duration} onChange={(e)=>handleChange(e)}/>
+                    <input key="duration" type="time" name="duration" value={input.duration} onChange={(e)=>handleChangeDuration(e)}/>
+                    {!errorDuration? null : <span>{errorDuration}</span>}
                 </div>
                 <div>
                     <label>Season:</label>
-                    {/* <input type="text" name="season" value={input.season} onChange={(e)=>handleChange(e)}/> */}
-                    <select key="season" name="season" onChange={e => handleChange(e)}>
+                    <select key="season" name="season" onChange={e => handleChangeSeason(e)}>
 
                         <option value="undefined">SELECT SEASON</option>
                         <option value="Summer">Summer</option>
@@ -116,19 +144,19 @@ export default function ActivityCreate(){
                         <option value="Spring">Spring</option>
 
                     </select>
-                    {!error.errorSeason? null : <span>{error.errorSeason}</span>}
+                    {!errorSeason? null : <span>{errorSeason}</span>}
 
                 </div>
                 <div>
                     <label>Countries:</label>
                     <select type="text" name="countryId" onChangeCapture={e => handleCountries(e)}>
-                            <option value={null}>SELECT COUNTRIES</option>
+                            <option>SELECT COUNTRIES</option>
                         {countries.map((country) => (
                             <option value={country.id}>{country.name}</option>
                         ))}
                     </select>
+                    {input.countryId? <span>You have to select at least one country</span> : null}
                     <ul><li>{input.countryId.map(el=> el + ",  ")}</li></ul>
-                    {/* <input type="text" name="countryId" value={input.countryId} onChange={(e)=>handleChange(e)}/> */}
                 </div>
                 <button type="submit">Create Activity</button>
             </form>

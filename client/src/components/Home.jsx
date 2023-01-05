@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, orderCountriesAlphabetically, orderCountriesByPopulation } from "../actions";
+import { getCountries, orderCountriesAlphabetically, orderCountriesByPopulation, filterCountriesByContinent } from "../actions";
 import Card from "./Card.jsx";
 import Paginate from "./Paginate.jsx";
 import NavBar from "./NavBar";
@@ -26,9 +26,8 @@ export default function Home(){
         dispatch(getCountries())
     },[dispatch])
 
-    function handleClick(e){
-        e.preventDefault();
-        dispatch(getCountries())
+    function handleFilterContinent(e){
+        dispatch(filterCountriesByContinent(e.target.value))
     }
 
     function handleSortAlphabetically (e){
@@ -49,7 +48,20 @@ export default function Home(){
         <div>
             <NavBar/>
             <h1>Individual Project - Henry Countries</h1>
-            {/* <button onClick={e=>{handleClick(e)}}>Reload Games</button> */}
+            <div>
+                <h3>Filter by</h3>
+                <h5>Continent</h5>
+                <select onChange={e => handleFilterContinent(e)}>
+                    <option value='All'>All</option>
+                    <option value='Africa'>Africa</option>
+                    <option value='Asia'>Asia</option>
+                    <option value='Europe'>Europe</option>
+                    <option value='North America'>North America</option>
+                    <option value='Oceania'>Oceania</option>
+                    <option value='South America'>South America</option>
+                </select>
+            </div>
+
             <div>
                 <h5>A-Z</h5>
                 <button value='asc1' onClick={e => handleSortAlphabetically(e)}>Upward</button>
